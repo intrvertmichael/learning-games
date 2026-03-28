@@ -3,57 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Letter Sorter</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./styles.css" />
+    <title>Learning Games</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div id="app">
-      <div id="header">✏️ Letter Sorter!</div>
+    <header>
+      <h1>Learning Games</h1>
+    </header>
 
-      <div id="picker-row">
-        <label for="letter-input">Letter:</label>
-        <input id="letter-input" maxlength="1" placeholder="A" value="A" />
-        <button id="go-btn">Let's Go! 🚀</button>
-      </div>
+    <main>
+      <section>
+        <h2>Welcome</h2>
+        <p>Start playing and learning today!</p>
+        <ul>
+          <li>
+            <a href="/LetterSorter/">Letter Sorter</a>
+          </li>
+        </ul>
+      </section>
+    </main>
 
-      <div id="targets">
-        <div class="target-box" id="upper-box">
-          <div class="target-label">Uppercase Letter</div>
-          <div class="hint-letter" id="upper-hint">A</div>
-          <div class="placed-area" id="upper-placed"></div>
-        </div>
-        <div class="target-box" id="lower-box">
-          <div class="target-label">Lowercase Letter</div>
-          <div class="hint-letter" id="lower-hint">a</div>
-          <div class="placed-area" id="lower-placed"></div>
-        </div>
-      </div>
-
-      <div id="tray-wrap">
-        <div id="tray-label">👆 Drag each letter to the right box!</div>
-        <div id="tray"></div>
-      </div>
-    </div>
-
-    <!-- Congrats overlay -->
-    <div id="congrats">
-      <div class="big-emoji">🎉</div>
-      <h1>Amazing job!</h1>
-      <div class="stats-card">
-        <div class="stat-row correct"
-          >✅ <span id="stat-correct">0</span> correct</div
-        >
-        <div class="stat-row incorrect"
-          >❌ <span id="stat-incorrect">0</span> incorrect</div
-        >
-      </div>
-      <button id="play-again">Play Again 🔄</button>
-    </div>
-
-    <script src="./script.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
