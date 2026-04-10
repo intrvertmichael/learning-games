@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Letter Search</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <div class="game-wrap">
+      <div>
+        <h2 class="sr-only">Letter Search</h2>
+        <p>tap all matching letter circles</p>
+      </div>
+
+      <div class="top-bar">
+        <label style="font-size: 13px; color: var(--color-text-secondary)"
+          >Find:</label
+        >
+        <select id="case-select">
+          <option value="upper">Uppercase</option>
+          <option value="lower">Lowercase</option>
+        </select>
+
+        <select id="letter-select"></select>
+
+        <button id="apply-btn">Apply</button>
+      </div>
+
+      <div class="target-box">
+        <div class="target-label">Find the</div>
+        <div class="target-letter" id="target-display">A</div>
+        <div class="target-sub" id="target-sub">uppercase letter</div>
+      </div>
+
+      <div class="score-bar">
+        <span
+          >Correct: <span class="score-val" id="score-correct">0</span>/<span
+            class="score-val"
+            id="score-total"
+            >0</span
+          ></span
+        >
+        <span
+          >Incorrect: <span class="score-val" id="score-wrong">0</span></span
+        >
+      </div>
+
+      <div class="relative">
+        <canvas id="confetti"></canvas>
+        <div class="circles-grid" id="circles-grid"></div>
+        <div class="win-overlay" id="win-overlay">
+          <div class="win-card">
+            <div class="win-title">Well done! 🎉</div>
+            <div class="win-stats" id="win-stats"></div>
+            <button class="win-btn" id="reset-btn">Play again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./script.js"></script> </body
+></html>
