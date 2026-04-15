@@ -14,7 +14,8 @@
   <body>
     <div class="game-wrap">
       <div>
-        <h2 class="sr-only">Letter Search</h2>
+        <a href="../">Back Home</a>
+        <div id="header">Letter Search</div>
         <p>tap all matching letter circles</p>
       </div>
 
@@ -30,12 +31,6 @@
         <select id="letter-select"></select>
 
         <button id="apply-btn">Apply</button>
-      </div>
-
-      <div class="target-box">
-        <div class="target-label">Find the</div>
-        <div class="target-letter" id="target-display">A</div>
-        <div class="target-sub" id="target-sub">uppercase letter</div>
       </div>
 
       <div class="score-bar">
@@ -55,11 +50,13 @@
         <canvas id="confetti"></canvas>
         <div class="circles-grid" id="circles-grid"></div>
         <div class="win-overlay" id="win-overlay">
-          <div class="win-card">
-            <div class="win-title">Well done! 🎉</div>
-            <div class="win-stats" id="win-stats"></div>
-            <button class="win-btn" id="reset-btn">Play again</button>
+          <div class="big-emoji">🎉</div>
+          <h1>Amazing job!</h1>
+          <div class="stats-card">
+            <div class="stat-row correct">✅ <span id="stat-correct">0</span> correct</div>
+            <div class="stat-row incorrect">❌ <span id="stat-incorrect">0</span> incorrect</div>
           </div>
+          <button class="win-btn" id="reset-btn">Play Again 🔄</button>
         </div>
       </div>
     </div>

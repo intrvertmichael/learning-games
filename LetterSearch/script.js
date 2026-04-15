@@ -10,14 +10,13 @@ let confettiAnim = null
 const letterSelect = document.getElementById("letter-select")
 const caseSelect = document.getElementById("case-select")
 const applyBtn = document.getElementById("apply-btn")
-const targetDisplay = document.getElementById("target-display")
-const targetSub = document.getElementById("target-sub")
 const grid = document.getElementById("circles-grid")
 const scoreCorrect = document.getElementById("score-correct")
 const scoreTotal = document.getElementById("score-total")
 const scoreWrong = document.getElementById("score-wrong")
 const winOverlay = document.getElementById("win-overlay")
-const winStats = document.getElementById("win-stats")
+const statCorrect = document.getElementById("stat-correct")
+const statIncorrect = document.getElementById("stat-incorrect")
 const resetBtn = document.getElementById("reset-btn")
 const confCanvas = document.getElementById("confetti")
 
@@ -49,12 +48,8 @@ function buildGrid() {
   const upper = currentLetter.toUpperCase()
   const lower = currentLetter.toLowerCase()
 
-  targetDisplay.textContent = currentCase === "upper" ? upper : lower
-  targetSub.textContent =
-    currentCase === "upper" ? "uppercase letter" : "lowercase letter"
-
-  const numTargets = 4 + Math.floor(Math.random() * 4)
-  const numDistractors = 20 - numTargets
+  const numTargets = 10
+  const numDistractors = 24 - numTargets
   totalTargets = numTargets
   scoreTotal.textContent = totalTargets
 
@@ -116,7 +111,8 @@ function buildGrid() {
 }
 
 function showWin() {
-  winStats.innerHTML = `Correct taps: <span>${correct}</span>&nbsp;&nbsp;&nbsp;Incorrect taps: <span>${wrong}</span>`
+  statCorrect.textContent = correct
+  statIncorrect.textContent = wrong
   winOverlay.classList.add("active")
   launchConfetti()
 }
