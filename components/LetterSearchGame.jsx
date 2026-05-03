@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react"
 
 import CongratsOverlay from "./CongratsOverlay"
 import GameShell from "./GameShell"
-import PillButton from "./PillButton"
 import ScoreBar from "./ScoreBar"
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -116,7 +115,7 @@ export default function LetterSearchGame() {
         <select
           className="select-input"
           id="case-select"
-          onChange={event => setCaseSelect(event.target.value)}
+          onChange={event => buildGrid(letterSelect, event.target.value)}
           value={caseSelect}
         >
           <option value="upper">Uppercase</option>
@@ -126,7 +125,7 @@ export default function LetterSearchGame() {
         <select
           className="select-input"
           aria-label="letter"
-          onChange={event => setLetterSelect(event.target.value)}
+          onChange={event => buildGrid(event.target.value, caseSelect)}
           value={letterSelect}
         >
           {letters.map(letter => (
@@ -135,10 +134,6 @@ export default function LetterSearchGame() {
             </option>
           ))}
         </select>
-
-        <PillButton onClick={() => buildGrid(letterSelect, caseSelect)}>
-          Apply
-        </PillButton>
       </div>
 
       <ScoreBar

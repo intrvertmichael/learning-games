@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react"
 
 import CongratsOverlay from "./CongratsOverlay"
 import GameShell from "./GameShell"
-import PillButton from "./PillButton"
 import ScoreBar from "./ScoreBar"
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -22,7 +21,7 @@ function shuffle(items) {
 function makeTokens(letter, shouldShuffle = true) {
   const types = [...Array(5).fill("upper"), ...Array(5).fill("lower")]
   const orderedTokens = types.map((type, index) => ({
-    id: `${type}-${index}`,
+    id: `${letter}-${type}-${index}`,
     type,
     placed: false,
     char: type === "upper" ? letter : letter.toLowerCase(),
@@ -44,7 +43,6 @@ function isOver(point, element) {
 
 export default function LetterSorterGame() {
   const [currentLetter, setCurrentLetter] = useState("A")
-  const [inputValue, setInputValue] = useState("A")
   const [tokens, setTokens] = useState(() => makeTokens("A", false))
   const [placed, setPlaced] = useState({ upper: [], lower: [] })
   const [correct, setCorrect] = useState(0)
@@ -67,13 +65,13 @@ export default function LetterSorterGame() {
 
   function buildRound(letter) {
     setCurrentLetter(letter)
-    setInputValue(letter)
     setTokens(makeTokens(letter))
     setPlaced({ upper: [], lower: [] })
     setCorrect(0)
     setIncorrect(0)
     setFlash({ upper: "", lower: "" })
     setDrag(null)
+    dragRef.current = null
     setShowWin(false)
     placedIdsRef.current = new Set()
   }
@@ -87,10 +85,6 @@ export default function LetterSorterGame() {
         600,
       )
     })
-  }
-
-  function handleGo() {
-    buildRound(inputValue)
   }
 
   function startDrag(event, token) {
@@ -185,8 +179,8 @@ export default function LetterSorterGame() {
         <select
           className="select-input"
           id="letter-select"
-          onChange={event => setInputValue(event.target.value)}
-          value={inputValue}
+          onChange={event => buildRound(event.target.value)}
+          value={currentLetter}
         >
           {letters.map(letter => (
             <option key={letter} value={letter}>
@@ -194,7 +188,6 @@ export default function LetterSorterGame() {
             </option>
           ))}
         </select>
-        <PillButton onClick={handleGo}>Go</PillButton>
       </div>
 
       <ScoreBar
