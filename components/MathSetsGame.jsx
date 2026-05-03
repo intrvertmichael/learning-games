@@ -124,7 +124,7 @@ export default function MathSetsGame() {
           {Array.from({ length: answer }, (_, index) => (
             <span
               className="pencil"
-              key={index}
+              key={`${answer}-${index}`}
               style={{ animationDelay: `${index * 0.025}s` }}
             >
               ✏️
