@@ -11,8 +11,9 @@ const MAX_SIZE = 10
 const CHOICES = Array.from({ length: MAX_SIZE }, (_, index) => index + 1)
 
 function makeQuestions() {
-  return Array.from({ length: TOTAL_ROUNDS }, () =>
-    Math.floor(Math.random() * MAX_SIZE) + 1,
+  return Array.from(
+    { length: TOTAL_ROUNDS },
+    () => Math.floor(Math.random() * MAX_SIZE) + 1,
   )
 }
 
@@ -89,8 +90,8 @@ export default function MathMeasureGame() {
 
   return (
     <GameShell
-      title="Math Measure"
-      subtitle="measure the pencil with ten squares"
+      title='Math Measure'
+      subtitle='measure the pencil with ten squares'
     >
       <ScoreBar
         items={[
@@ -99,7 +100,7 @@ export default function MathMeasureGame() {
         ]}
       />
 
-      <div className="checks-row" aria-label="rounds complete">
+      <div className='checks-row' aria-label='rounds complete'>
         {Array.from({ length: TOTAL_ROUNDS }, (_, index) => (
           <div
             className={`check-slot ${index < completedRounds ? "earned" : ""}`}
@@ -110,23 +111,23 @@ export default function MathMeasureGame() {
         ))}
       </div>
 
-      <section className="panel measure-panel">
-        <div className="measure-prompt-label">How many squares long?</div>
+      <section className='panel measure-panel'>
+        <div className='measure-prompt-label'>How big is the pencil?</div>
 
-        <div className="math-measure-stage" aria-live="polite">
-          <div className="measured-object-track" aria-hidden="true">
+        <div className='math-measure-stage' aria-live='polite'>
+          <div className='measured-object-track' aria-hidden='true'>
             <div
-              className="measured-pencil"
+              className='measured-pencil'
               key={`${round}-${answer}`}
               style={{ gridColumn: `1 / span ${answer}` }}
             >
-              <span className="pencil-eraser" />
-              <span className="pencil-body" />
-              <span className="pencil-tip" />
+              <span className='pencil-eraser' />
+              <span className='pencil-body' />
+              <span className='pencil-tip' />
             </div>
           </div>
 
-          <div className="measure-ruler" aria-label="click a measurement">
+          <div className='measure-ruler' aria-label='click a measurement'>
             {CHOICES.map(choice => (
               <button
                 className={`measure-square ${
@@ -134,7 +135,7 @@ export default function MathMeasureGame() {
                 } ${wrongChoice === choice ? "wrong" : ""}`}
                 key={choice}
                 onClick={() => chooseMeasure(choice)}
-                type="button"
+                type='button'
               >
                 {choice}
               </button>
