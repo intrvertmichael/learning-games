@@ -687,6 +687,94 @@ select {
   text-align: center;
 }
 
+.math-bigger-panel {
+  display: grid;
+  gap: 18px;
+  padding: 18px;
+  text-align: center;
+}
+
+.math-bigger-prompt {
+  color: var(--text-muted);
+  font-size: 1.25rem;
+}
+
+.math-bigger-choices {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr);
+  align-items: stretch;
+  gap: 10px;
+}
+
+.math-bigger-choice {
+  min-width: 0;
+  min-height: 236px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+  border: 4px solid var(--surface-border);
+  border-radius: 24px;
+  background: #fff;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 12px 10px;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.math-bigger-choice:hover {
+  transform: scale(1.03);
+}
+
+.math-bigger-choice.correct {
+  background: #d8f7d7;
+  border-color: var(--green);
+  color: #2d7033;
+  transform: scale(1.04);
+}
+
+.math-bigger-choice.wrong {
+  background: #ffe1e0;
+  border-color: var(--red);
+  color: #d13232;
+  animation: shake 0.3s ease;
+}
+
+.math-bigger-number {
+  display: grid;
+  place-items: center;
+  min-height: 70px;
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.math-bigger-pencils {
+  min-height: 120px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-content: center;
+  justify-items: center;
+  gap: 6px;
+  color: var(--text-dark);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.math-bigger-pencil {
+  display: grid;
+  place-items: center;
+  animation: pencilIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.math-bigger-symbol {
+  align-self: center;
+  color: var(--text-primary);
+  font-size: 2.2rem;
+}
+
 .same-different-prompt {
   color: var(--text-muted);
   font-size: 1.25rem;
@@ -1072,6 +1160,37 @@ select {
 
   .same-different-panel {
     padding: 14px 10px;
+  }
+
+  .math-bigger-panel {
+    padding: 14px 10px;
+  }
+
+  .math-bigger-choices {
+    grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .math-bigger-choice {
+    min-height: 198px;
+    border-radius: 18px;
+    padding: 10px 6px;
+  }
+
+  .math-bigger-number {
+    min-height: 54px;
+    font-size: 3rem;
+  }
+
+  .math-bigger-pencils {
+    min-height: 104px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+    font-size: 1.55rem;
+  }
+
+  .math-bigger-symbol {
+    font-size: 1.8rem;
   }
 
   .emoji-compare-row {
