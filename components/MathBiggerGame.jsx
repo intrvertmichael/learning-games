@@ -9,31 +9,27 @@ import ScoreBar from "./ScoreBar"
 const TOTAL_ROUNDS = 10
 const MIN_NUMBER = 1
 const MAX_NUMBER = 10
+const MIN_DIFFERENCE = 3
 
-function randomNumber(excludedValue = null) {
+function makeNumberPairs(previousQuestion = null) {
   const choices = []
-  for (let value = MIN_NUMBER; value <= MAX_NUMBER; value++) {
-    if (value !== excludedValue) choices.push(value)
+  for (let left = MIN_NUMBER; left <= MAX_NUMBER; left++) {
+    for (let right = MIN_NUMBER; right <= MAX_NUMBER; right++) {
+      const matchesPrevious =
+        previousQuestion?.left === left && previousQuestion?.right === right
+
+      if (Math.abs(left - right) >= MIN_DIFFERENCE && !matchesPrevious) {
+        choices.push({ left, right })
+      }
+    }
   }
-  return choices[Math.floor(Math.random() * choices.length)]
+
+  return choices
 }
 
 function makeQuestion(previousQuestion = null) {
-  let left = randomNumber()
-  let right = randomNumber(left)
-
-  if (previousQuestion) {
-    let guard = 0
-    while (
-      left === previousQuestion.left &&
-      right === previousQuestion.right &&
-      guard < 20
-    ) {
-      left = randomNumber()
-      right = randomNumber(left)
-      guard += 1
-    }
-  }
+  const choices = makeNumberPairs(previousQuestion)
+  const { left, right } = choices[Math.floor(Math.random() * choices.length)]
 
   return {
     id: `${left}-${right}-${Date.now()}-${Math.random()}`,

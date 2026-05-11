@@ -10,11 +10,19 @@ const TOTAL_ROUNDS = 10
 const MAX_SIZE = 10
 const CHOICES = Array.from({ length: MAX_SIZE }, (_, index) => index + 1)
 
+function randomSize(previousSize = null) {
+  const choices = CHOICES.filter(choice => choice !== previousSize)
+  return choices[Math.floor(Math.random() * choices.length)]
+}
+
 function makeQuestions() {
-  return Array.from(
-    { length: TOTAL_ROUNDS },
-    () => Math.floor(Math.random() * MAX_SIZE) + 1,
-  )
+  const questions = []
+
+  for (let index = 0; index < TOTAL_ROUNDS; index++) {
+    questions.push(randomSize(questions[index - 1]))
+  }
+
+  return questions
 }
 
 export default function MathMeasureGame() {
