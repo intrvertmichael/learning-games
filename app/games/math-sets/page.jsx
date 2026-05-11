@@ -1,7 +1,7 @@
 import MathSetsGame from "@/components/MathSetsGame"
 
 export const metadata = {
-  title: "MathSets | Learning Games",
+  title: "Math Sets | Learning Games",
 }
 
 export default function MathSetsPage() {

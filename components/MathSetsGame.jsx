@@ -99,7 +99,7 @@ export default function MathSetsGame() {
   }, [flash])
 
   return (
-    <GameShell title="MathSets" subtitle="count the pencils in each set">
+    <GameShell title="Math Sets" subtitle="count the pencils in each set">
       <ScoreBar
         items={[
           { label: "Checks", value: checks, total: GOAL },
