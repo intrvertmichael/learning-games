@@ -83,9 +83,39 @@ select {
   margin-top: 0.35rem;
 }
 
-.back-link {
-  display: inline-block;
-  margin-bottom: 0.25rem;
+.home-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-bottom: 0.55rem;
+  border: 3px solid #d44a8a;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ffd6e8, #fff1a8);
+  box-shadow: 0 5px 0 rgba(212, 74, 138, 0.24);
+  color: #9f2557;
+  font-size: 1.05rem;
+  line-height: 1;
+  padding: 9px 16px 9px 13px;
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.home-button:hover {
+  box-shadow: 0 7px 0 rgba(212, 74, 138, 0.24);
+  transform: translateY(-2px);
+}
+
+.home-button:focus-visible {
+  outline: 4px solid rgba(255, 107, 53, 0.35);
+  outline-offset: 3px;
+}
+
+.home-button-icon {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
 }
 
 .panel {

@@ -115,7 +115,7 @@ export default function SameOrDifferentGame() {
   }, [flash])
 
   return (
-    <GameShell title="Same or Different" subtitle="compare the two emojis">
+    <GameShell title='Same or Different' subtitle='compare the two emojis'>
       <ScoreBar
         items={[
           { label: "Checks", value: correct, total: TOTAL_ROUNDS },
@@ -123,7 +123,7 @@ export default function SameOrDifferentGame() {
         ]}
       />
 
-      <div className="checks-row" aria-label="rounds complete">
+      <div className='checks-row' aria-label='rounds complete'>
         {Array.from({ length: TOTAL_ROUNDS }, (_, index) => (
           <div
             className={`check-slot ${index < completedRounds ? "earned" : ""}`}
@@ -134,24 +134,26 @@ export default function SameOrDifferentGame() {
         ))}
       </div>
 
-      <section className="panel same-different-panel">
-        <div className="same-different-prompt">Are they the same?</div>
-        <div className="emoji-compare-row" aria-live="polite" key={question.id}>
-          <div className="emoji-compare-tile">{question.first}</div>
-          <div className="compare-symbol">?</div>
-          <div className="emoji-compare-tile">{question.second}</div>
+      <section className='panel same-different-panel'>
+        <div className='same-different-prompt'>
+          Are they the same or different?
+        </div>
+        <div className='emoji-compare-row' aria-live='polite' key={question.id}>
+          <div className='emoji-compare-tile'>{question.first}</div>
+          <div className='compare-symbol'>?</div>
+          <div className='emoji-compare-tile'>{question.second}</div>
         </div>
       </section>
 
-      <div className="same-different-options" aria-label="answer choices">
+      <div className='same-different-options' aria-label='answer choices'>
         <button
           className={`same-different-button ${
             selected === "same" ? "correct" : ""
           } ${wrongChoice === "same" ? "wrong" : ""}`}
           onClick={() => chooseAnswer("same")}
-          type="button"
+          type='button'
         >
-          <span className="same-different-button-emoji">🟰</span>
+          <span className='same-different-button-emoji'>🟰</span>
           <span>same</span>
         </button>
         <button
@@ -159,9 +161,9 @@ export default function SameOrDifferentGame() {
             selected === "different" ? "correct" : ""
           } ${wrongChoice === "different" ? "wrong" : ""}`}
           onClick={() => chooseAnswer("different")}
-          type="button"
+          type='button'
         >
-          <span className="same-different-button-emoji">🚫</span>
+          <span className='same-different-button-emoji'>🚫</span>
           <span>different</span>
         </button>
       </div>
