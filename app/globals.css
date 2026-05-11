@@ -214,6 +214,11 @@ select {
   border-color: var(--green);
 }
 
+.game-card[data-accent="yellow"] {
+  background: #fff1a8;
+  border-color: #e5b800;
+}
+
 .game-card h2 {
   color: var(--text-primary);
   font-size: 2rem;
@@ -645,6 +650,92 @@ select {
   animation: shake 0.3s ease;
 }
 
+.same-different-panel {
+  display: grid;
+  gap: 18px;
+  padding: 18px;
+  text-align: center;
+}
+
+.same-different-prompt {
+  color: var(--text-muted);
+  font-size: 1.25rem;
+}
+
+.emoji-compare-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.emoji-compare-tile {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 4px solid var(--surface-border);
+  border-radius: 24px;
+  background: #fff;
+  font-size: 5rem;
+  line-height: 1;
+  animation: placeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.compare-symbol {
+  color: var(--text-primary);
+  font-size: 2.3rem;
+}
+
+.same-different-options {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.same-different-button {
+  min-height: 82px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  padding: 1rem;
+  border: 4px solid var(--surface-border);
+  border-radius: 24px;
+  background: #fff;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 1.25rem;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.same-different-button-emoji {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.same-different-button:hover {
+  transform: scale(1.04);
+}
+
+.same-different-button.correct {
+  background: #d8f7d7;
+  border-color: var(--green);
+  color: #2d7033;
+  transform: scale(1.05);
+}
+
+.same-different-button.wrong {
+  background: #ffe1e0;
+  border-color: var(--red);
+  color: #d13232;
+  animation: shake 0.3s ease;
+}
+
 .screen-flash-green {
   animation: screenGreen 0.45s ease;
 }
@@ -947,6 +1038,30 @@ select {
   .measure-square {
     border-right-width: 2px;
     font-size: 1.1rem;
+  }
+
+  .same-different-panel {
+    padding: 14px 10px;
+  }
+
+  .emoji-compare-row {
+    grid-template-columns: minmax(0, 1fr) 30px minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .emoji-compare-tile {
+    border-radius: 18px;
+    font-size: 3.4rem;
+  }
+
+  .compare-symbol {
+    font-size: 1.8rem;
+  }
+
+  .same-different-button {
+    min-height: 70px;
+    border-radius: 20px;
+    font-size: 1rem;
   }
 
   .stats-card {
