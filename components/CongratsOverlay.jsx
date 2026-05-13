@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react"
 
+import HomeButton from "./HomeButton"
 import PillButton from "./PillButton"
 
 const CONFETTI_COLORS = [
@@ -52,9 +53,18 @@ export default function CongratsOverlay({
           ❌ <span>{incorrect}</span> incorrect
         </div>
       </div>
-      <PillButton className="play-again-button" onClick={onPlayAgain}>
-        Play Again 🔄
-      </PillButton>
+      <div className="congrats-actions">
+        <PillButton
+          className="congrats-action-button play-again-button"
+          onClick={onPlayAgain}
+        >
+          Play Again
+        </PillButton>
+        <HomeButton
+          className="congrats-action-button congrats-home-button"
+          showIcon={false}
+        />
+      </div>
       {pieces.map(piece => (
         <span
           className="confetti-piece"
