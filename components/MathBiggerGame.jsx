@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 
 import CongratsOverlay from "./CongratsOverlay"
 import GameShell from "./GameShell"
+import RoundTracker from "./RoundTracker"
 import ScoreBar from "./ScoreBar"
 
 const TOTAL_ROUNDS = 10
@@ -44,6 +45,7 @@ export default function MathBiggerGame() {
   const [roundsComplete, setRoundsComplete] = useState(0)
   const [correct, setCorrect] = useState(0)
   const [incorrect, setIncorrect] = useState(0)
+  const [roundMarks, setRoundMarks] = useState([])
   const [selected, setSelected] = useState(null)
   const [wrongChoice, setWrongChoice] = useState(null)
   const [acceptingAnswers, setAcceptingAnswers] = useState(true)
@@ -55,6 +57,7 @@ export default function MathBiggerGame() {
     setRoundsComplete(0)
     setCorrect(0)
     setIncorrect(0)
+    setRoundMarks([])
     setSelected(null)
     setWrongChoice(null)
     setAcceptingAnswers(true)
@@ -82,8 +85,16 @@ export default function MathBiggerGame() {
 
     if (value === question.answer) {
       const nextRound = roundsComplete + 1
+      const alreadyMissed = roundMarks[roundsComplete] === "incorrect"
       setSelected(value)
-      setCorrect(count => count + 1)
+      if (!alreadyMissed) {
+        setCorrect(count => count + 1)
+        setRoundMarks(existing => {
+          const nextMarks = [...existing]
+          nextMarks[roundsComplete] = "correct"
+          return nextMarks
+        })
+      }
       setRoundsComplete(nextRound)
       setAcceptingAnswers(false)
       flashScreen("screen-flash-green")
@@ -97,6 +108,11 @@ export default function MathBiggerGame() {
     }
 
     setIncorrect(count => count + 1)
+    setRoundMarks(existing => {
+      const nextMarks = [...existing]
+      nextMarks[roundsComplete] = "incorrect"
+      return nextMarks
+    })
     setWrongChoice(value)
     flashScreen("screen-flash-red")
     window.setTimeout(() => setWrongChoice(null), 350)
@@ -109,44 +125,33 @@ export default function MathBiggerGame() {
   }, [flash])
 
   return (
-    <GameShell title="Math Bigger" subtitle="pick the bigger number">
+    <GameShell title='Math Bigger' subtitle='pick the bigger set'>
       <ScoreBar
         items={[
-          { label: "Checks", value: roundsComplete, total: TOTAL_ROUNDS },
+          { label: "Checks", value: correct, total: TOTAL_ROUNDS },
           { label: "Incorrect", value: incorrect },
         ]}
       />
 
-      <div className="checks-row" aria-label="rounds complete">
-        {Array.from({ length: TOTAL_ROUNDS }, (_, index) => (
-          <div
-            className={`check-slot ${
-              index < roundsComplete ? "earned" : ""
-            }`}
-            key={index}
-          >
-            {index < roundsComplete ? "✅" : "✓"}
-          </div>
-        ))}
-      </div>
+      <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
 
-      <section className="panel math-bigger-panel">
-        <div className="math-bigger-prompt">Which number is bigger?</div>
+      <section className='panel math-bigger-panel'>
+        <div className='math-bigger-prompt'>Which set is bigger?</div>
         <div
-          className="math-bigger-choices"
-          aria-live="polite"
+          className='math-bigger-choices'
+          aria-live='polite'
           key={question.id}
         >
           <NumberChoice
-            choice="left"
+            choice='left'
             isCorrect={selected === "left"}
             isWrong={wrongChoice === "left"}
             number={question.left}
             onChoose={chooseAnswer}
           />
-          <div className="math-bigger-symbol">?</div>
+          <div className='math-bigger-symbol'>?</div>
           <NumberChoice
-            choice="right"
+            choice='right'
             isCorrect={selected === "right"}
             isWrong={wrongChoice === "right"}
             number={question.right}
@@ -172,13 +177,13 @@ function NumberChoice({ choice, isCorrect, isWrong, number, onChoose }) {
         isWrong ? "wrong" : ""
       }`}
       onClick={() => onChoose(choice)}
-      type="button"
+      type='button'
     >
-      <span className="math-bigger-number">{number}</span>
-      <span className="math-bigger-pencils" aria-label={`${number} pencils`}>
+      <span className='math-bigger-number'>{number}</span>
+      <span className='math-bigger-pencils' aria-label={`${number} pencils`}>
         {Array.from({ length: number }, (_, index) => (
           <span
-            className="math-bigger-pencil"
+            className='math-bigger-pencil'
             key={index}
             style={{ animationDelay: `${index * 0.02}s` }}
           >

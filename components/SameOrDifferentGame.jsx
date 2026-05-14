@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 
 import CongratsOverlay from "./CongratsOverlay"
 import GameShell from "./GameShell"
+import RoundTracker from "./RoundTracker"
 import ScoreBar from "./ScoreBar"
 
 const TOTAL_ROUNDS = 10
@@ -48,6 +49,7 @@ export default function SameOrDifferentGame() {
   const [round, setRound] = useState(0)
   const [correct, setCorrect] = useState(0)
   const [incorrect, setIncorrect] = useState(0)
+  const [roundMarks, setRoundMarks] = useState([])
   const [selected, setSelected] = useState(null)
   const [wrongChoice, setWrongChoice] = useState(null)
   const [acceptingAnswers, setAcceptingAnswers] = useState(true)
@@ -55,13 +57,13 @@ export default function SameOrDifferentGame() {
   const [showWin, setShowWin] = useState(false)
 
   const question = questions[round] ?? questions[questions.length - 1]
-  const completedRounds = correct
 
   function startGame() {
     setQuestions(makeQuestions())
     setRound(0)
     setCorrect(0)
     setIncorrect(0)
+    setRoundMarks([])
     setSelected(null)
     setWrongChoice(null)
     setAcceptingAnswers(true)
@@ -89,8 +91,16 @@ export default function SameOrDifferentGame() {
 
     if (value === question.answer) {
       const nextRound = round + 1
+      const alreadyMissed = roundMarks[round] === "incorrect"
       setSelected(value)
-      setCorrect(count => count + 1)
+      if (!alreadyMissed) {
+        setCorrect(count => count + 1)
+        setRoundMarks(existing => {
+          const nextMarks = [...existing]
+          nextMarks[round] = "correct"
+          return nextMarks
+        })
+      }
       setAcceptingAnswers(false)
       flashScreen("screen-flash-green")
 
@@ -103,6 +113,11 @@ export default function SameOrDifferentGame() {
     }
 
     setIncorrect(count => count + 1)
+    setRoundMarks(existing => {
+      const nextMarks = [...existing]
+      nextMarks[round] = "incorrect"
+      return nextMarks
+    })
     setWrongChoice(value)
     flashScreen("screen-flash-red")
     window.setTimeout(() => setWrongChoice(null), 350)
@@ -123,16 +138,7 @@ export default function SameOrDifferentGame() {
         ]}
       />
 
-      <div className='checks-row' aria-label='rounds complete'>
-        {Array.from({ length: TOTAL_ROUNDS }, (_, index) => (
-          <div
-            className={`check-slot ${index < completedRounds ? "earned" : ""}`}
-            key={index}
-          >
-            {index < completedRounds ? "✅" : "✓"}
-          </div>
-        ))}
-      </div>
+      <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
 
       <section className='panel same-different-panel'>
         <div className='same-different-prompt'>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 
 import CongratsOverlay from "./CongratsOverlay"
 import GameShell from "./GameShell"
+import RoundTracker from "./RoundTracker"
 import ScoreBar from "./ScoreBar"
 
 const GOAL = 10
@@ -24,6 +25,7 @@ export default function MathSetsGame() {
   const [checks, setChecks] = useState(0)
   const [correctTries, setCorrectTries] = useState(0)
   const [incorrectTries, setIncorrectTries] = useState(0)
+  const [roundMarks, setRoundMarks] = useState([])
   const [removed, setRemoved] = useState([])
   const [correctOption, setCorrectOption] = useState(null)
   const [wrongOption, setWrongOption] = useState(null)
@@ -40,6 +42,7 @@ export default function MathSetsGame() {
     setChecks(0)
     setCorrectTries(0)
     setIncorrectTries(0)
+    setRoundMarks([])
     setRemoved([])
     setCorrectOption(null)
     setWrongOption(null)
@@ -69,8 +72,16 @@ export default function MathSetsGame() {
 
     if (value === answer) {
       const nextChecks = checks + 1
+      const alreadyMissed = roundMarks[checks] === "incorrect"
       setAcceptingAnswers(false)
-      setCorrectTries(count => count + 1)
+      if (!alreadyMissed) {
+        setCorrectTries(count => count + 1)
+        setRoundMarks(existing => {
+          const nextMarks = [...existing]
+          nextMarks[checks] = "correct"
+          return nextMarks
+        })
+      }
       setChecks(nextChecks)
       setCorrectOption(value)
       flashScreen("screen-flash-green")
@@ -84,6 +95,11 @@ export default function MathSetsGame() {
     }
 
     setIncorrectTries(count => count + 1)
+    setRoundMarks(existing => {
+      const nextMarks = [...existing]
+      nextMarks[checks] = "incorrect"
+      return nextMarks
+    })
     setWrongOption(value)
     flashScreen("screen-flash-red")
     window.setTimeout(() => {
@@ -102,21 +118,12 @@ export default function MathSetsGame() {
     <GameShell title="Math Sets" subtitle="count the pencils in each set">
       <ScoreBar
         items={[
-          { label: "Checks", value: checks, total: GOAL },
+          { label: "Checks", value: correctTries, total: GOAL },
           { label: "Incorrect", value: incorrectTries },
         ]}
       />
 
-      <div className="checks-row" aria-label="checks earned">
-        {Array.from({ length: GOAL }, (_, index) => (
-          <div
-            className={`check-slot ${index < checks ? "earned" : ""}`}
-            key={index}
-          >
-            {index < checks ? "✅" : "✓"}
-          </div>
-        ))}
-      </div>
+      <RoundTracker marks={roundMarks} total={GOAL} label="checks earned" />
 
       <section className="panel math-panel">
         <div className="math-prompt-label">How many pencils?</div>

@@ -4,11 +4,13 @@ import { useEffect, useState } from "react"
 
 import CongratsOverlay from "./CongratsOverlay"
 import GameShell from "./GameShell"
+import RoundTracker from "./RoundTracker"
 import ScoreBar from "./ScoreBar"
 
 const TOTAL_ROUNDS = 10
 const PATTERN_LENGTH = 6
 const REVEAL_STEP = 0.58
+const REVEAL_ANIMATION = 0.62
 const EMOJI_PAIRS = [
   ["🍎", "🍌"],
   ["🚗", "✈️"],
@@ -43,16 +45,16 @@ function makeQuestion(previousQuestion = null) {
     return useFirst ? pair[0] : pair[1]
   })
   const answer = startsWithA ? pair[0] : pair[1]
-  const distractors = shuffle(
+  const outsideDistractor = shuffle(
     EMOJI_PAIRS.flat().filter(emoji => !pair.includes(emoji)),
-  ).slice(0, 2)
+  )[0]
 
   return {
     id: `${pair.join("-")}-${startsWithA ? "a" : "b"}-${Date.now()}-${Math.random()}`,
     pairKey: pair.join("-"),
     pattern,
     answer,
-    options: shuffle([answer, ...distractors]),
+    options: shuffle([...pair, outsideDistractor]),
   }
 }
 
@@ -61,10 +63,12 @@ export default function MathPatternGame() {
   const [roundsComplete, setRoundsComplete] = useState(0)
   const [correct, setCorrect] = useState(0)
   const [incorrect, setIncorrect] = useState(0)
+  const [roundMarks, setRoundMarks] = useState([])
   const [removed, setRemoved] = useState([])
   const [correctOption, setCorrectOption] = useState(null)
   const [wrongOption, setWrongOption] = useState(null)
   const [acceptingAnswers, setAcceptingAnswers] = useState(true)
+  const [isRevealing, setIsRevealing] = useState(true)
   const [flash, setFlash] = useState("")
   const [replayKey, setReplayKey] = useState(0)
   const [showWin, setShowWin] = useState(false)
@@ -74,10 +78,12 @@ export default function MathPatternGame() {
     setRoundsComplete(0)
     setCorrect(0)
     setIncorrect(0)
+    setRoundMarks([])
     setRemoved([])
     setCorrectOption(null)
     setWrongOption(null)
     setAcceptingAnswers(true)
+    setIsRevealing(true)
     setFlash("")
     setReplayKey(0)
     setShowWin(false)
@@ -92,6 +98,7 @@ export default function MathPatternGame() {
   }
 
   function goToNextRound() {
+    setIsRevealing(true)
     setQuestion(currentQuestion => makeQuestion(currentQuestion))
     setRemoved([])
     setCorrectOption(null)
@@ -100,16 +107,25 @@ export default function MathPatternGame() {
   }
 
   function replayPattern() {
+    setIsRevealing(true)
     setReplayKey(key => key + 1)
   }
 
   function chooseAnswer(value) {
-    if (!acceptingAnswers || removed.includes(value)) return
+    if (!acceptingAnswers || isRevealing || removed.includes(value)) return
 
     if (value === question.answer) {
       const nextRound = roundsComplete + 1
+      const alreadyMissed = roundMarks[roundsComplete] === "incorrect"
       setCorrectOption(value)
-      setCorrect(count => count + 1)
+      if (!alreadyMissed) {
+        setCorrect(count => count + 1)
+        setRoundMarks(existing => {
+          const nextMarks = [...existing]
+          nextMarks[roundsComplete] = "correct"
+          return nextMarks
+        })
+      }
       setRoundsComplete(nextRound)
       setAcceptingAnswers(false)
       flashScreen("screen-flash-green")
@@ -123,6 +139,11 @@ export default function MathPatternGame() {
     }
 
     setIncorrect(count => count + 1)
+    setRoundMarks(existing => {
+      const nextMarks = [...existing]
+      nextMarks[roundsComplete] = "incorrect"
+      return nextMarks
+    })
     setWrongOption(value)
     flashScreen("screen-flash-red")
     window.setTimeout(() => {
@@ -137,25 +158,23 @@ export default function MathPatternGame() {
     return () => document.body.classList.remove(flash)
   }, [flash])
 
+  useEffect(() => {
+    setIsRevealing(true)
+    const revealMs = (PATTERN_LENGTH * REVEAL_STEP + REVEAL_ANIMATION) * 1000
+    const timer = window.setTimeout(() => setIsRevealing(false), revealMs)
+    return () => window.clearTimeout(timer)
+  }, [question.id, replayKey])
+
   return (
     <GameShell title="Math Pattern" subtitle="find what comes next">
       <ScoreBar
         items={[
-          { label: "Checks", value: roundsComplete, total: TOTAL_ROUNDS },
+          { label: "Checks", value: correct, total: TOTAL_ROUNDS },
           { label: "Incorrect", value: incorrect },
         ]}
       />
 
-      <div className="checks-row" aria-label="rounds complete">
-        {Array.from({ length: TOTAL_ROUNDS }, (_, index) => (
-          <div
-            className={`check-slot ${index < roundsComplete ? "earned" : ""}`}
-            key={index}
-          >
-            {index < roundsComplete ? "✅" : "✓"}
-          </div>
-        ))}
-      </div>
+      <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
 
       <section className="panel pattern-panel">
         <div className="pattern-prompt">What comes next?</div>
@@ -182,6 +201,7 @@ export default function MathPatternGame() {
         </div>
         <button
           className="pattern-replay-button"
+          disabled={isRevealing}
           onClick={replayPattern}
           type="button"
         >
@@ -199,6 +219,7 @@ export default function MathPatternGame() {
             }`}
             key={option}
             onClick={() => chooseAnswer(option)}
+            disabled={!acceptingAnswers || isRevealing || removed.includes(option)}
             type="button"
           >
             {option}
