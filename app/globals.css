@@ -18,6 +18,8 @@
   --surface: #fffbe6;
   --surface-strong: #fff0d6;
   --surface-border: #f5c878;
+  --prompt-box-bg: rgba(255, 255, 255, 0.28);
+  --prompt-box-border: rgba(245, 200, 120, 0.55);
   --text-primary: #ff6b35;
   --text-muted: #7a5200;
   --text-dark: #4b3b2d;
@@ -626,7 +628,7 @@ select {
 .measured-object-track {
   min-height: 92px;
   align-items: center;
-  border: 4px solid #1f1f1f;
+  border: 4px solid rgba(31, 31, 31, 0.34);
   border-bottom: 0;
   border-radius: 10px 10px 0 0;
   background:
@@ -634,10 +636,10 @@ select {
       90deg,
       transparent 0,
       transparent calc(10% - 3px),
-      rgba(31, 31, 31, 0.35) calc(10% - 3px),
-      rgba(31, 31, 31, 0.35) 10%
+      rgba(31, 31, 31, 0.16) calc(10% - 3px),
+      rgba(31, 31, 31, 0.16) 10%
     ),
-    #fffef8;
+    var(--prompt-box-bg);
   padding-block: 14px;
 }
 
@@ -714,7 +716,7 @@ select {
   animation: shake 0.3s ease;
 }
 
-.same-different-panel {
+.math-compare-panel {
   display: grid;
   gap: 18px;
   padding: 18px;
@@ -859,9 +861,9 @@ select {
   display: grid;
   place-items: center;
   min-width: 0;
-  border: 3px solid var(--surface-border);
+  border: 3px solid var(--prompt-box-border);
   border-radius: 14px;
-  background: #fff;
+  background: var(--prompt-box-bg);
   font-size: clamp(1.45rem, 8vw, 2.1rem);
   line-height: 1;
   transform: scale(0);
@@ -869,7 +871,7 @@ select {
 }
 
 .pattern-missing {
-  background: #fff1a8;
+  background: rgba(255, 241, 168, 0.55);
   color: var(--text-primary);
 }
 
@@ -927,7 +929,7 @@ select {
   pointer-events: none;
 }
 
-.same-different-prompt {
+.math-compare-prompt {
   color: var(--text-muted);
   font-size: 1.25rem;
 }
@@ -943,9 +945,9 @@ select {
   aspect-ratio: 1;
   display: grid;
   place-items: center;
-  border: 4px solid var(--surface-border);
+  border: 4px solid var(--prompt-box-border);
   border-radius: 24px;
-  background: #fff;
+  background: var(--prompt-box-bg);
   font-size: 5rem;
   line-height: 1;
   animation: placeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
@@ -956,15 +958,15 @@ select {
   font-size: 2.3rem;
 }
 
-.same-different-options {
+.math-compare-options {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
-.same-different-button {
-  min-height: 82px;
+.math-compare-button {
+  min-height: 96px;
   display: grid;
   place-items: center;
   align-content: center;
@@ -983,23 +985,23 @@ select {
     color 0.15s ease;
 }
 
-.same-different-button-emoji {
-  font-size: 3rem;
+.math-compare-button-emoji {
+  font-size: 4.25rem;
   line-height: 1;
 }
 
-.same-different-button:hover {
+.math-compare-button:hover {
   transform: scale(1.04);
 }
 
-.same-different-button.correct {
+.math-compare-button.correct {
   background: #d8f7d7;
   border-color: var(--green);
   color: #2d7033;
   transform: scale(1.05);
 }
 
-.same-different-button.wrong {
+.math-compare-button.wrong {
   background: #ffe1e0;
   border-color: var(--red);
   color: #d13232;
@@ -1363,7 +1365,7 @@ select {
     font-size: 1.1rem;
   }
 
-  .same-different-panel {
+  .math-compare-panel {
     padding: 14px 10px;
   }
 
@@ -1412,10 +1414,14 @@ select {
     font-size: 1.8rem;
   }
 
-  .same-different-button {
-    min-height: 70px;
+  .math-compare-button {
+    min-height: 84px;
     border-radius: 20px;
     font-size: 1rem;
+  }
+
+  .math-compare-button-emoji {
+    font-size: 3.6rem;
   }
 
   .stats-card {

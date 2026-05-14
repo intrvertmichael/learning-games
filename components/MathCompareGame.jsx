@@ -43,7 +43,7 @@ function makeQuestions() {
   ).sort(() => Math.random() - 0.5)
 }
 
-export default function SameOrDifferentGame() {
+export default function MathCompareGame() {
   const [questions, setQuestions] = useState(() => makeQuestions())
   const [round, setRound] = useState(0)
   const [correct, setCorrect] = useState(0)
@@ -129,13 +129,11 @@ export default function SameOrDifferentGame() {
   }, [flash])
 
   return (
-    <GameShell title='Same or Different' subtitle='compare the two emojis'>
+    <GameShell title='Math Compare' subtitle='compare the two emojis'>
       <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
 
-      <section className='panel same-different-panel'>
-        <div className='same-different-prompt'>
-          Are they the same or different?
-        </div>
+      <section className='panel math-compare-panel'>
+        <div className='math-compare-prompt'>Are they the same or different?</div>
         <div className='emoji-compare-row' aria-live='polite' key={question.id}>
           <div className='emoji-compare-tile'>{question.first}</div>
           <div className='compare-symbol'>?</div>
@@ -143,25 +141,25 @@ export default function SameOrDifferentGame() {
         </div>
       </section>
 
-      <div className='same-different-options' aria-label='answer choices'>
+      <div className='math-compare-options' aria-label='answer choices'>
         <button
-          className={`same-different-button ${
+          className={`math-compare-button ${
             selected === "same" ? "correct" : ""
           } ${wrongChoice === "same" ? "wrong" : ""}`}
           onClick={() => chooseAnswer("same")}
           type='button'
         >
-          <span className='same-different-button-emoji'>🟰</span>
+          <span className='math-compare-button-emoji'>🟰</span>
           <span>same</span>
         </button>
         <button
-          className={`same-different-button ${
+          className={`math-compare-button ${
             selected === "different" ? "correct" : ""
           } ${wrongChoice === "different" ? "wrong" : ""}`}
           onClick={() => chooseAnswer("different")}
           type='button'
         >
-          <span className='same-different-button-emoji'>🚫</span>
+          <span className='math-compare-button-emoji'>🚫</span>
           <span>different</span>
         </button>
       </div>
