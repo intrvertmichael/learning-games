@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import CongratsOverlay from "./CongratsOverlay"
 import GameShell from "./GameShell"
 import RoundTracker from "./RoundTracker"
-import ScoreBar from "./ScoreBar"
 
 const TOTAL_ROUNDS = 10
 const MAX_SIZE = 10
@@ -116,13 +115,6 @@ export default function MathMeasureGame() {
       title='Math Measure'
       subtitle='measure the pencil with ten squares'
     >
-      <ScoreBar
-        items={[
-          { label: "Checks", value: correct, total: TOTAL_ROUNDS },
-          { label: "Incorrect", value: incorrect },
-        ]}
-      />
-
       <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
 
       <section className='panel measure-panel'>

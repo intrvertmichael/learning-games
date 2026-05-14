@@ -2,7 +2,11 @@
 
 import Link from "next/link"
 
-export default function HomeButton({ className = "", showIcon = true }) {
+export default function HomeButton({
+  className = "",
+  iconOnly = false,
+  showIcon = true,
+}) {
   return (
     <Link
       aria-label="Go back to the home page"
@@ -32,7 +36,7 @@ export default function HomeButton({ className = "", showIcon = true }) {
           />
         </svg>
       )}
-      <span>Home</span>
+      {iconOnly ? null : <span>Home</span>}
     </Link>
   )
 }

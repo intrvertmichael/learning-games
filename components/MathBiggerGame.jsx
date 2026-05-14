@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import CongratsOverlay from "./CongratsOverlay"
 import GameShell from "./GameShell"
 import RoundTracker from "./RoundTracker"
-import ScoreBar from "./ScoreBar"
 
 const TOTAL_ROUNDS = 10
 const MIN_NUMBER = 1
@@ -126,13 +125,6 @@ export default function MathBiggerGame() {
 
   return (
     <GameShell title='Math Bigger' subtitle='pick the bigger set'>
-      <ScoreBar
-        items={[
-          { label: "Checks", value: correct, total: TOTAL_ROUNDS },
-          { label: "Incorrect", value: incorrect },
-        ]}
-      />
-
       <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
 
       <section className='panel math-bigger-panel'>

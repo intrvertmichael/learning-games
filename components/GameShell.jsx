@@ -6,7 +6,7 @@ export default function GameShell({ title, subtitle, children }) {
   return (
     <main className="game-shell">
       <div className="game-heading">
-        <HomeButton />
+        <HomeButton className="game-home-button" iconOnly />
         <h1>{title}</h1>
         {subtitle ? <p>{subtitle}</p> : null}
       </div>

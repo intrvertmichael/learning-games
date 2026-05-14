@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import CongratsOverlay from "./CongratsOverlay"
 import GameShell from "./GameShell"
 import RoundTracker from "./RoundTracker"
-import ScoreBar from "./ScoreBar"
 
 const GOAL = 10
 const MIN_SET = 1
@@ -116,13 +115,6 @@ export default function MathSetsGame() {
 
   return (
     <GameShell title="Math Sets" subtitle="count the pencils in each set">
-      <ScoreBar
-        items={[
-          { label: "Checks", value: correctTries, total: GOAL },
-          { label: "Incorrect", value: incorrectTries },
-        ]}
-      />
-
       <RoundTracker marks={roundMarks} total={GOAL} label="checks earned" />
 
       <section className="panel math-panel">

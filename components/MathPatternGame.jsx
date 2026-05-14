@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import CongratsOverlay from "./CongratsOverlay"
 import GameShell from "./GameShell"
 import RoundTracker from "./RoundTracker"
-import ScoreBar from "./ScoreBar"
 
 const TOTAL_ROUNDS = 10
 const PATTERN_LENGTH = 6
@@ -167,13 +166,6 @@ export default function MathPatternGame() {
 
   return (
     <GameShell title="Math Pattern" subtitle="find what comes next">
-      <ScoreBar
-        items={[
-          { label: "Checks", value: correct, total: TOTAL_ROUNDS },
-          { label: "Incorrect", value: incorrect },
-        ]}
-      />
-
       <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
 
       <section className="panel pattern-panel">

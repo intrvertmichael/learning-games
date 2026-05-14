@@ -69,6 +69,11 @@ select {
   text-align: center;
 }
 
+.game-heading {
+  position: relative;
+  padding: 22px 48px 0;
+}
+
 .game-heading h1,
 .home-heading h1 {
   color: var(--text-primary);
@@ -116,6 +121,29 @@ select {
   width: 22px;
   height: 22px;
   flex: 0 0 auto;
+}
+
+.game-home-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 40px;
+  min-height: 40px;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 0;
+  border-width: 3px;
+  box-shadow: 0 4px 0 rgba(212, 74, 138, 0.2);
+  padding: 0;
+}
+
+.game-home-button:hover {
+  box-shadow: 0 5px 0 rgba(212, 74, 138, 0.2);
+}
+
+.game-home-button .home-button-icon {
+  width: 21px;
+  height: 21px;
 }
 
 .panel {
