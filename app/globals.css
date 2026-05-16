@@ -929,6 +929,94 @@ select {
   pointer-events: none;
 }
 
+.reading-story-panel {
+  width: 100%;
+  display: grid;
+  gap: 12px;
+  padding: 1.25rem;
+  background: #fff;
+  text-align: left;
+}
+
+.reading-story-text {
+  margin: 0;
+  color: #171717;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.1rem, 2.6vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.65;
+}
+
+.reading-options {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.reading-option {
+  min-height: 150px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  padding: 1rem;
+  border: 4px solid var(--surface-border);
+  border-radius: 24px;
+  background: #fff;
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.reading-option:hover:not(:disabled) {
+  transform: scale(1.04);
+}
+
+.reading-option:disabled:not(.removed) {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.reading-option-emoji {
+  font-size: clamp(3.1rem, 11vw, 4.6rem);
+  line-height: 1;
+}
+
+.reading-option-name {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: clamp(1.15rem, 4vw, 1.45rem);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.reading-option.correct {
+  background: #d8f7d7;
+  border-color: var(--green);
+  color: #2d7033;
+  transform: scale(1.06);
+}
+
+.reading-option.wrong {
+  background: #ffe1e0;
+  border-color: var(--red);
+  color: #d13232;
+  animation: shake 0.3s ease;
+}
+
+.reading-option.removed {
+  opacity: 0;
+  transform: scale(0);
+  pointer-events: none;
+}
+
 .math-compare-prompt {
   color: var(--text-muted);
   font-size: 1.25rem;
@@ -1422,6 +1510,29 @@ select {
 
   .math-compare-button-emoji {
     font-size: 3.6rem;
+  }
+
+  .reading-story-panel {
+    padding: 14px 10px;
+  }
+
+  .reading-story-text {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .reading-option {
+    min-height: 118px;
+    border-radius: 18px;
+    padding: 10px 6px;
+  }
+
+  .reading-option-emoji {
+    font-size: 3.1rem;
+  }
+
+  .reading-option-name {
+    font-size: 1.05rem;
   }
 
   .stats-card {
