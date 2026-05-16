@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useLayoutEffect, useState } from "react"
 
 import { games } from "@/lib/games"
 
@@ -10,14 +10,15 @@ const gameTabs = [
   { id: "math", label: "Math Games" },
 ]
 const HOME_TAB_KEY = "learning-games-home-tab"
+const isGameTab = tabId => gameTabs.some(tab => tab.id === tabId)
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState("ela")
   const visibleGames = games.filter(game => game.category === activeTab)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const savedTab = window.localStorage.getItem(HOME_TAB_KEY)
-    if (gameTabs.some(tab => tab.id === savedTab)) {
+    if (isGameTab(savedTab)) {
       setActiveTab(savedTab)
     }
   }, [])
