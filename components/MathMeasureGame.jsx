@@ -31,7 +31,7 @@ function makeQuestions() {
 }
 
 export default function MathMeasureGame() {
-  const [questions, setQuestions] = useState(() => makeQuestions())
+  const [questions, setQuestions] = useState(null)
   const [round, setRound] = useState(0)
   const [correct, setCorrect] = useState(0)
   const [incorrect, setIncorrect] = useState(0)
@@ -42,7 +42,7 @@ export default function MathMeasureGame() {
   const [flash, setFlash] = useState("")
   const [showWin, setShowWin] = useState(false)
 
-  const answer = questions[round] ?? questions[questions.length - 1]
+  const answer = questions?.[round] ?? questions?.[questions.length - 1] ?? null
 
   function startGame() {
     setQuestions(makeQuestions())
@@ -73,7 +73,7 @@ export default function MathMeasureGame() {
   }
 
   function chooseMeasure(value) {
-    if (!acceptingAnswers) return
+    if (answer === null || !acceptingAnswers) return
 
     if (value === answer) {
       const nextRound = round + 1
@@ -114,6 +114,24 @@ export default function MathMeasureGame() {
     document.body.classList.add(flash)
     return () => document.body.classList.remove(flash)
   }, [flash])
+
+  useEffect(() => {
+    setQuestions(makeQuestions())
+  }, [])
+
+  if (answer === null) {
+    return (
+      <GameShell
+        title='Math Measure'
+        subtitle='measure the pencil with ten squares'
+      >
+        <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
+        <section className='panel measure-panel' aria-live='polite'>
+          <div className='measure-prompt-label'>Loading pencil...</div>
+        </section>
+      </GameShell>
+    )
+  }
 
   return (
     <GameShell

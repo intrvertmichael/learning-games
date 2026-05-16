@@ -58,7 +58,7 @@ function makeQuestion(previousQuestion = null) {
 }
 
 export default function MathPatternGame() {
-  const [question, setQuestion] = useState(() => makeQuestion())
+  const [question, setQuestion] = useState(null)
   const [roundsComplete, setRoundsComplete] = useState(0)
   const [correct, setCorrect] = useState(0)
   const [incorrect, setIncorrect] = useState(0)
@@ -111,7 +111,8 @@ export default function MathPatternGame() {
   }
 
   function chooseAnswer(value) {
-    if (!acceptingAnswers || isRevealing || removed.includes(value)) return
+    if (!question || !acceptingAnswers || isRevealing || removed.includes(value))
+      return
 
     if (value === question.answer) {
       const nextRound = roundsComplete + 1
@@ -158,11 +159,27 @@ export default function MathPatternGame() {
   }, [flash])
 
   useEffect(() => {
+    setQuestion(makeQuestion())
+  }, [])
+
+  useEffect(() => {
+    if (!question) return undefined
     setIsRevealing(true)
     const revealMs = (PATTERN_LENGTH * REVEAL_STEP + REVEAL_ANIMATION) * 1000
     const timer = window.setTimeout(() => setIsRevealing(false), revealMs)
     return () => window.clearTimeout(timer)
-  }, [question.id, replayKey])
+  }, [question, replayKey])
+
+  if (!question) {
+    return (
+      <GameShell title="Math Pattern" subtitle="find what comes next">
+        <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
+        <section className="panel pattern-panel" aria-live="polite">
+          <div className="pattern-prompt">Loading pattern...</div>
+        </section>
+      </GameShell>
+    )
+  }
 
   return (
     <GameShell title="Math Pattern" subtitle="find what comes next">
@@ -201,23 +218,26 @@ export default function MathPatternGame() {
         </button>
       </section>
 
-      <div className="pattern-options" aria-label="answer choices">
-        {question.options.map(option => (
-          <button
-            className={`pattern-option ${
-              removed.includes(option) ? "removed" : ""
-            } ${correctOption === option ? "correct" : ""} ${
-              wrongOption === option ? "wrong" : ""
-            }`}
-            key={option}
-            onClick={() => chooseAnswer(option)}
-            disabled={!acceptingAnswers || isRevealing || removed.includes(option)}
-            type="button"
-          >
-            {option}
-          </button>
-        ))}
-      </div>
+      {!isRevealing ? (
+        <div className="pattern-options" aria-label="answer choices">
+          {question.options.map((option, index) => (
+            <button
+              className={`pattern-option ${
+                removed.includes(option) ? "removed" : ""
+              } ${correctOption === option ? "correct" : ""} ${
+                wrongOption === option ? "wrong" : ""
+              }`}
+              key={option}
+              onClick={() => chooseAnswer(option)}
+              disabled={!acceptingAnswers || removed.includes(option)}
+              style={{ "--pattern-option-delay": `${index * 0.06}s` }}
+              type="button"
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       <CongratsOverlay
         correct={correct}

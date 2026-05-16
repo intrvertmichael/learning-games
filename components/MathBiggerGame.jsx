@@ -40,7 +40,7 @@ function makeQuestion(previousQuestion = null) {
 }
 
 export default function MathBiggerGame() {
-  const [question, setQuestion] = useState(() => makeQuestion())
+  const [question, setQuestion] = useState(null)
   const [roundsComplete, setRoundsComplete] = useState(0)
   const [correct, setCorrect] = useState(0)
   const [incorrect, setIncorrect] = useState(0)
@@ -80,7 +80,7 @@ export default function MathBiggerGame() {
   }
 
   function chooseAnswer(value) {
-    if (!acceptingAnswers) return
+    if (!question || !acceptingAnswers) return
 
     if (value === question.answer) {
       const nextRound = roundsComplete + 1
@@ -122,6 +122,21 @@ export default function MathBiggerGame() {
     document.body.classList.add(flash)
     return () => document.body.classList.remove(flash)
   }, [flash])
+
+  useEffect(() => {
+    setQuestion(makeQuestion())
+  }, [])
+
+  if (!question) {
+    return (
+      <GameShell title='Math Bigger' subtitle='pick the bigger set'>
+        <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
+        <section className='panel math-bigger-panel' aria-live='polite'>
+          <div className='math-bigger-prompt'>Loading sets...</div>
+        </section>
+      </GameShell>
+    )
+  }
 
   return (
     <GameShell title='Math Bigger' subtitle='pick the bigger set'>

@@ -44,7 +44,7 @@ function makeQuestions() {
 }
 
 export default function MathCompareGame() {
-  const [questions, setQuestions] = useState(() => makeQuestions())
+  const [questions, setQuestions] = useState(null)
   const [round, setRound] = useState(0)
   const [correct, setCorrect] = useState(0)
   const [incorrect, setIncorrect] = useState(0)
@@ -55,7 +55,7 @@ export default function MathCompareGame() {
   const [flash, setFlash] = useState("")
   const [showWin, setShowWin] = useState(false)
 
-  const question = questions[round] ?? questions[questions.length - 1]
+  const question = questions?.[round] ?? questions?.[questions.length - 1] ?? null
 
   function startGame() {
     setQuestions(makeQuestions())
@@ -86,7 +86,7 @@ export default function MathCompareGame() {
   }
 
   function chooseAnswer(value) {
-    if (!acceptingAnswers) return
+    if (!question || !acceptingAnswers) return
 
     if (value === question.answer) {
       const nextRound = round + 1
@@ -127,6 +127,21 @@ export default function MathCompareGame() {
     document.body.classList.add(flash)
     return () => document.body.classList.remove(flash)
   }, [flash])
+
+  useEffect(() => {
+    setQuestions(makeQuestions())
+  }, [])
+
+  if (!question) {
+    return (
+      <GameShell title='Math Compare' subtitle='compare the two emojis'>
+        <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
+        <section className='panel math-compare-panel' aria-live='polite'>
+          <div className='math-compare-prompt'>Loading comparison...</div>
+        </section>
+      </GameShell>
+    )
+  }
 
   return (
     <GameShell title='Math Compare' subtitle='compare the two emojis'>
