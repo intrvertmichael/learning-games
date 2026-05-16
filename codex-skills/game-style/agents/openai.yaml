@@ -1,0 +1,4 @@
+interface:
+  display_name: "Game Style"
+  short_description: "Match the app's kid-friendly UI style"
+  default_prompt: "Use $game-style to style a Learning Games activity consistently."

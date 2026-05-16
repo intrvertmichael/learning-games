@@ -1,0 +1,4 @@
+interface:
+  display_name: "Round Loop"
+  short_description: "Reusable answer and feedback loop"
+  default_prompt: "Use $round-loop to implement a ten-round answer flow with feedback."

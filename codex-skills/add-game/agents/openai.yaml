@@ -1,0 +1,4 @@
+interface:
+  display_name: "Add Game"
+  short_description: "Add new games in this app's patterns"
+  default_prompt: "Use $add-game to add a new classroom game to this app."
