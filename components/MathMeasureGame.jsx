@@ -7,8 +7,12 @@ import GameShell from "./GameShell"
 import RoundTracker from "./RoundTracker"
 
 const TOTAL_ROUNDS = 10
+const MIN_SIZE = 3
 const MAX_SIZE = 10
-const CHOICES = Array.from({ length: MAX_SIZE }, (_, index) => index + 1)
+const CHOICES = Array.from(
+  { length: MAX_SIZE - MIN_SIZE + 1 },
+  (_, index) => index + MIN_SIZE,
+)
 
 function randomSize(previousSize = null) {
   const choices = CHOICES.filter(choice => choice !== previousSize)
