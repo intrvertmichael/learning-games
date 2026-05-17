@@ -363,6 +363,18 @@ select {
   border-color: var(--pink-border);
 }
 
+.target-box.short-sound {
+  background: var(--blue-bg);
+  border-color: var(--blue-border);
+  color: #1f669f;
+}
+
+.target-box.long-sound {
+  background: #fff1a8;
+  border-color: #e5b800;
+  color: #8d6200;
+}
+
 .target-label {
   font-size: 2rem;
 }
@@ -373,6 +385,14 @@ select {
 
 .target-box.lower .target-label {
   color: #b0305a;
+}
+
+.target-box.short-sound .target-label {
+  color: inherit;
+}
+
+.target-box.long-sound .target-label {
+  color: inherit;
 }
 
 .hint-letter {
@@ -459,6 +479,147 @@ select {
   color: #c0205e;
 }
 
+.letter-sounds-flash-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.letter-sounds-controls {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+}
+
+.letter-focus {
+  justify-self: start;
+  color: var(--text-primary);
+  font-size: 3.2rem;
+  line-height: 1;
+  text-shadow: 2px 2px 0 #ffd39d;
+}
+
+.letter-sounds-grid {
+  margin: 8px 0;
+}
+
+.letter-sounds-grid .target-box {
+  min-height: 230px;
+}
+
+.sound-mark {
+  color: inherit;
+  font-family: "Nunito", sans-serif;
+  font-size: 4.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.sound-example {
+  color: inherit;
+  font-size: 0.88rem;
+  line-height: 1.1;
+  opacity: 0.86;
+  text-align: center;
+}
+
+.word-placed-area {
+  align-content: flex-start;
+  min-height: 96px;
+}
+
+.word-tray {
+  gap: 8px;
+}
+
+.letter-sound-word-panel {
+  min-height: 142px;
+  display: grid;
+  place-items: center;
+}
+
+.single-word-tray {
+  width: 100%;
+  min-height: 102px;
+  align-items: center;
+}
+
+.word-token,
+.placed-word-token {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.word-token {
+  min-width: 78px;
+  border: 4px solid var(--surface-border);
+  color: var(--text-primary);
+  cursor: grab;
+  font-size: 1.05rem;
+  line-height: 1;
+  padding: 8px 14px;
+  touch-action: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.15s ease;
+}
+
+.word-token:hover {
+  transform: scale(1.04);
+}
+
+.word-token:active {
+  cursor: grabbing;
+}
+
+.word-token.placed {
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.letter-sound-prompt-token {
+  min-width: min(100%, 280px);
+  min-height: 92px;
+  border-color: var(--text-primary);
+  border-radius: 28px;
+  font-size: clamp(2.4rem, 12vw, 4.2rem);
+  padding: 14px 24px;
+  box-shadow: 0 8px 0 rgba(245, 200, 120, 0.46);
+}
+
+.letter-sound-prompt-token:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.letter-sound-next-word {
+  color: var(--text-primary);
+  font-size: 1.6rem;
+}
+
+.placed-word-token {
+  min-width: 58px;
+  border: 3px solid transparent;
+  font-size: 0.95rem;
+  line-height: 1;
+  padding: 7px 10px;
+  animation: placeIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.placed-word-token.short-word-token {
+  border-color: var(--blue-border);
+  color: #1a6ba8;
+}
+
+.placed-word-token.long-word-token {
+  border-color: #e5b800;
+  color: #8d6200;
+}
+
 .drag-clone {
   position: fixed;
   z-index: 9999;
@@ -475,6 +636,18 @@ select {
   font-size: 2.3rem;
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
   transform: translate(-50%, -50%) scale(1.12);
+}
+
+.word-drag-clone {
+  width: auto;
+  min-width: 88px;
+  height: 48px;
+  border-color: var(--surface-border);
+  border-radius: 999px;
+  color: var(--text-primary);
+  font-size: 1.15rem;
+  line-height: 1;
+  padding: 8px 16px;
 }
 
 .circle-grid {
@@ -1151,6 +1324,14 @@ select {
   animation: screenRed 0.45s ease;
 }
 
+.letter-sounds-flash-layer.screen-flash-green {
+  animation: letterSoundsScreenGreen 0.45s ease;
+}
+
+.letter-sounds-flash-layer.screen-flash-red {
+  animation: letterSoundsScreenRed 0.45s ease;
+}
+
 .flash-green {
   animation: flashGreen 0.5s ease;
 }
@@ -1403,6 +1584,26 @@ select {
   }
   45% {
     background: #ffc8c8;
+  }
+}
+
+@keyframes letterSoundsScreenGreen {
+  0%,
+  100% {
+    background: rgba(184, 245, 204, 0);
+  }
+  45% {
+    background: rgba(184, 245, 204, 0.58);
+  }
+}
+
+@keyframes letterSoundsScreenRed {
+  0%,
+  100% {
+    background: rgba(255, 200, 200, 0);
+  }
+  45% {
+    background: rgba(255, 200, 200, 0.62);
   }
 }
 

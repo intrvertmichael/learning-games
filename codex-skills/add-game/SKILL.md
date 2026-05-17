@@ -25,6 +25,7 @@ Use this skill to add a new game end to end in this repo.
 - Import app modules with the `@/` alias when crossing top-level folders.
 - Prefer constants such as `TOTAL_ROUNDS`, `GOAL`, `OPTIONS`, and domain-specific item pools near the top of the game file.
 - Keep question generation as pure helper functions above the component.
+- Avoid hydration mismatches: do not call randomized or time-based helpers (`Math.random`, `Date.now`, shuffled question builders, random IDs) inside `useState` initializers or render-time expressions that affect the initial UI. Use deterministic initial state such as `null`, `[]`, or an ordered placeholder, then generate randomized rounds in `useEffect` after hydration.
 - Keep the home page driven by `lib/games.js`; do not hard-code new cards in `app/page.jsx`.
 - Preserve the app's mobile-first width: shared shells max out at 500px.
 
