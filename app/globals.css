@@ -236,6 +236,7 @@ select {
 
 .home-tabs {
   width: 100%;
+  position: relative;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
@@ -245,7 +246,26 @@ select {
   background: var(--surface-strong);
 }
 
+.home-tabs::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: calc((100% - 20px) / 2);
+  height: calc(100% - 12px);
+  border-radius: 16px;
+  background: #f2c15f;
+  box-shadow: 0 4px 12px rgba(122, 82, 0, 0.12);
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.home-tabs[data-active-tab="math"]::before {
+  transform: translateX(calc(100% + 8px));
+}
+
 .home-tab {
+  position: relative;
+  z-index: 1;
   min-height: 54px;
   border: 0;
   border-radius: 16px;
@@ -265,9 +285,7 @@ select {
 }
 
 .home-tab[aria-selected="true"] {
-  background: #f2c15f;
   color: var(--text-muted);
-  box-shadow: 0 4px 12px rgba(122, 82, 0, 0.12);
 }
 
 .home-tab:focus-visible {
@@ -279,6 +297,20 @@ select {
   width: 100%;
   display: grid;
   gap: 12px;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.game-card-list.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.game-card-list.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
 }
 
 .game-card {
