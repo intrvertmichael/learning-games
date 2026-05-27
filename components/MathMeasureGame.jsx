@@ -8,7 +8,7 @@ import RoundTracker from "./RoundTracker"
 
 const TOTAL_ROUNDS = 10
 const MIN_SIZE = 3
-const MAX_SIZE = 10
+const MAX_SIZE = 12
 const CHOICES = Array.from({ length: MAX_SIZE }, (_, index) => index + 1)
 const SIZE_CHOICES = Array.from(
   { length: MAX_SIZE - MIN_SIZE + 1 },
@@ -123,7 +123,7 @@ export default function MathMeasureGame() {
     return (
       <GameShell
         title='Math Measure'
-        subtitle='measure the pencil with ten squares'
+        subtitle='measure the pencil with twelve squares'
       >
         <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
         <section className='panel measure-panel' aria-live='polite'>
@@ -136,7 +136,7 @@ export default function MathMeasureGame() {
   return (
     <GameShell
       title='Math Measure'
-      subtitle='measure the pencil with ten squares'
+      subtitle='measure the pencil with twelve squares'
     >
       <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
 

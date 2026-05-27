@@ -5,9 +5,10 @@ import { useEffect, useState } from "react"
 import CongratsOverlay from "./CongratsOverlay"
 import GameShell from "./GameShell"
 import RoundTracker from "./RoundTracker"
+import compareData from "@/data/math-compare-emojis.json"
 
 const TOTAL_ROUNDS = 10
-const EMOJIS = ["🍎", "🚗", "⭐", "🐶", "🌈", "⚽", "🎈", "🍕", "🦋", "🌻"]
+const EMOJIS = compareData.emojis
 
 function pickRandom(items) {
   return items[Math.floor(Math.random() * items.length)]

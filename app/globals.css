@@ -126,14 +126,11 @@ select {
 }
 
 .game-home-button {
-  position: absolute;
-  top: 10px;
-  left: 10px;
   width: 40px;
   min-height: 40px;
   justify-content: center;
   gap: 0;
-  margin-bottom: 0;
+  margin-bottom: 20px;
   border-width: 3px;
   box-shadow: 0 4px 0 rgba(212, 74, 138, 0.2);
   padding: 0;
@@ -868,7 +865,7 @@ select {
 .measured-object-track,
 .measure-ruler {
   display: grid;
-  grid-template-columns: repeat(10, minmax(0, 1fr));
+  grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
 .measured-object-track {
@@ -881,9 +878,9 @@ select {
     repeating-linear-gradient(
       90deg,
       transparent 0,
-      transparent calc(10% - 3px),
-      rgba(31, 31, 31, 0.16) calc(10% - 3px),
-      rgba(31, 31, 31, 0.16) 10%
+      transparent calc((100% / 12) - 3px),
+      rgba(31, 31, 31, 0.16) calc((100% / 12) - 3px),
+      rgba(31, 31, 31, 0.16) calc(100% / 12)
     ),
     var(--prompt-box-bg);
   padding-block: 14px;
@@ -969,26 +966,39 @@ select {
   text-align: center;
 }
 
-.math-bigger-panel {
+.math-bigger-smaller-panel {
   display: grid;
   gap: 18px;
   padding: 18px;
   text-align: center;
 }
 
-.math-bigger-prompt {
+.math-bigger-smaller-prompt {
   color: var(--text-muted);
   font-size: 1.25rem;
 }
 
-.math-bigger-choices {
+.math-bigger-smaller-focus-select {
+  min-height: 44px;
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  padding: 5px 12px;
+  vertical-align: middle;
+}
+
+.math-bigger-smaller-focus-select:focus {
+  color: var(--text-primary);
+}
+
+.math-bigger-smaller-choices {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr);
   align-items: stretch;
   gap: 10px;
 }
 
-.math-bigger-choice {
+.math-bigger-smaller-choice {
   min-width: 0;
   min-height: 236px;
   display: grid;
@@ -1007,25 +1017,25 @@ select {
     color 0.15s ease;
 }
 
-.math-bigger-choice:hover {
+.math-bigger-smaller-choice:hover {
   transform: scale(1.03);
 }
 
-.math-bigger-choice.correct {
+.math-bigger-smaller-choice.correct {
   background: #d8f7d7;
   border-color: var(--green);
   color: #2d7033;
   transform: scale(1.04);
 }
 
-.math-bigger-choice.wrong {
+.math-bigger-smaller-choice.wrong {
   background: #ffe1e0;
   border-color: var(--red);
   color: #d13232;
   animation: shake 0.3s ease;
 }
 
-.math-bigger-number {
+.math-bigger-smaller-number {
   display: grid;
   place-items: center;
   min-height: 70px;
@@ -1033,7 +1043,7 @@ select {
   line-height: 1;
 }
 
-.math-bigger-pencils {
+.math-bigger-smaller-pencils {
   min-height: 120px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1045,13 +1055,13 @@ select {
   line-height: 1;
 }
 
-.math-bigger-pencil {
+.math-bigger-smaller-pencil {
   display: grid;
   place-items: center;
   animation: pencilIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
-.math-bigger-symbol {
+.math-bigger-smaller-symbol {
   align-self: center;
   color: var(--text-primary);
   font-size: 2.2rem;
@@ -1139,8 +1149,7 @@ select {
   line-height: 1;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transform-origin: center;
-  animation: patternOptionIn 0.38s cubic-bezier(0.34, 1.56, 0.64, 1)
-    backwards;
+  animation: patternOptionIn 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
   animation-delay: var(--pattern-option-delay, 0s);
   transition:
     transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -1197,6 +1206,13 @@ select {
   font-size: clamp(1.1rem, 2.6vw, 1.35rem);
   font-weight: 600;
   line-height: 1.65;
+}
+
+.reading-options-prompt {
+  color: var(--text-primary);
+  font-size: 1.35rem;
+  line-height: 1.1;
+  text-align: center;
 }
 
 .reading-options {
@@ -1752,34 +1768,34 @@ select {
     padding: 14px 10px;
   }
 
-  .math-bigger-panel {
+  .math-bigger-smaller-panel {
     padding: 14px 10px;
   }
 
-  .math-bigger-choices {
+  .math-bigger-smaller-choices {
     grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
     gap: 6px;
   }
 
-  .math-bigger-choice {
+  .math-bigger-smaller-choice {
     min-height: 198px;
     border-radius: 18px;
     padding: 10px 6px;
   }
 
-  .math-bigger-number {
+  .math-bigger-smaller-number {
     min-height: 54px;
     font-size: 3rem;
   }
 
-  .math-bigger-pencils {
+  .math-bigger-smaller-pencils {
     min-height: 104px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 5px;
     font-size: 1.55rem;
   }
 
-  .math-bigger-symbol {
+  .math-bigger-smaller-symbol {
     font-size: 1.8rem;
   }
 

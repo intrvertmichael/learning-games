@@ -5,8 +5,9 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import CongratsOverlay from "./CongratsOverlay"
 import GameShell from "./GameShell"
 import ScoreBar from "./ScoreBar"
+import lettersData from "@/data/letters.json"
 
-const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const LETTERS = lettersData.letters
 const TOTAL = 10
 
 function shuffle(items) {
@@ -57,7 +58,7 @@ export default function LetterSorterGame() {
   const placedIdsRef = useRef(new Set())
 
   const totalPlaced = placed.upper.length + placed.lower.length
-  const letters = useMemo(() => LETTERS.split(""), [])
+  const letters = useMemo(() => LETTERS, [])
 
   useEffect(() => {
     setTokens(makeTokens("A"))

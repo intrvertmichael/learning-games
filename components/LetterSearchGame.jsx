@@ -5,8 +5,9 @@ import { useEffect, useMemo, useState } from "react"
 import CongratsOverlay from "./CongratsOverlay"
 import GameShell from "./GameShell"
 import ScoreBar from "./ScoreBar"
+import lettersData from "@/data/letters.json"
 
-const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const LETTERS = lettersData.letters
 const TARGET_TOTAL = 10
 const GRID_TOTAL = 24
 
@@ -106,7 +107,7 @@ export default function LetterSearchGame() {
     )
   }
 
-  const letters = useMemo(() => ALPHABET.split(""), [])
+  const letters = useMemo(() => LETTERS, [])
 
   return (
     <GameShell title="Letter Search" subtitle="tap all matching letter circles">

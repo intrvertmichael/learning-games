@@ -5,25 +5,13 @@ import { useEffect, useState } from "react"
 import CongratsOverlay from "./CongratsOverlay"
 import GameShell from "./GameShell"
 import RoundTracker from "./RoundTracker"
+import patternData from "@/data/math-pattern-emoji-pairs.json"
 
 const TOTAL_ROUNDS = 10
 const PATTERN_LENGTH = 6
 const REVEAL_STEP = 0.58
 const REVEAL_ANIMATION = 0.62
-const EMOJI_PAIRS = [
-  ["🍎", "🍌"],
-  ["🚗", "✈️"],
-  ["⭐", "🌙"],
-  ["🐶", "🐱"],
-  ["🌈", "☀️"],
-  ["⚽", "🏀"],
-  ["🎈", "🎁"],
-  ["🍕", "🍔"],
-  ["🦋", "🌻"],
-  ["🐸", "🐝"],
-  ["🍓", "🍇"],
-  ["🚀", "🛸"],
-]
+const EMOJI_PAIRS = patternData.emojiPairs
 
 function pickRandom(items) {
   return items[Math.floor(Math.random() * items.length)]

@@ -151,6 +151,8 @@ export default function ReadingMainCharacterGame() {
         <p className="reading-story-text">{story.story}</p>
       </section>
 
+      <div className="reading-options-prompt">Who is the story about ?</div>
+
       <div className="reading-options" aria-label="main character choices">
         {story.options.map(option => (
           <button

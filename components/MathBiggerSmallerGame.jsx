@@ -10,6 +10,18 @@ const TOTAL_ROUNDS = 10
 const MIN_NUMBER = 1
 const MAX_NUMBER = 10
 const MIN_DIFFERENCE = 3
+const FOCUS_MODES = {
+  bigger: {
+    label: "Bigger",
+    prompt: "Bigger",
+    subtitle: "pick the bigger or smaller set",
+  },
+  smaller: {
+    label: "Smaller",
+    prompt: "Smaller",
+    subtitle: "pick the bigger or smaller set",
+  },
+}
 
 function makeNumberPairs(previousQuestion = null) {
   const choices = []
@@ -35,11 +47,19 @@ function makeQuestion(previousQuestion = null) {
     id: `${left}-${right}-${Date.now()}-${Math.random()}`,
     left,
     right,
-    answer: left > right ? "left" : "right",
   }
 }
 
-export default function MathBiggerGame() {
+function getAnswer(question, focusMode) {
+  if (focusMode === "smaller") {
+    return question.left < question.right ? "left" : "right"
+  }
+
+  return question.left > question.right ? "left" : "right"
+}
+
+export default function MathBiggerSmallerGame() {
+  const [focusMode, setFocusMode] = useState("bigger")
   const [question, setQuestion] = useState(null)
   const [roundsComplete, setRoundsComplete] = useState(0)
   const [correct, setCorrect] = useState(0)
@@ -50,9 +70,14 @@ export default function MathBiggerGame() {
   const [acceptingAnswers, setAcceptingAnswers] = useState(true)
   const [flash, setFlash] = useState("")
   const [showWin, setShowWin] = useState(false)
+  const modeContent = FOCUS_MODES[focusMode]
 
-  function startGame() {
+  function startGame(nextFocusMode = focusMode) {
+    const resolvedFocusMode =
+      typeof nextFocusMode === "string" ? nextFocusMode : focusMode
+
     setQuestion(makeQuestion())
+    setFocusMode(resolvedFocusMode)
     setRoundsComplete(0)
     setCorrect(0)
     setIncorrect(0)
@@ -82,7 +107,7 @@ export default function MathBiggerGame() {
   function chooseAnswer(value) {
     if (!question || !acceptingAnswers) return
 
-    if (value === question.answer) {
+    if (value === getAnswer(question, focusMode)) {
       const nextRound = roundsComplete + 1
       const alreadyMissed = roundMarks[roundsComplete] === "incorrect"
       setSelected(value)
@@ -117,6 +142,10 @@ export default function MathBiggerGame() {
     window.setTimeout(() => setWrongChoice(null), 350)
   }
 
+  function changeFocusMode(event) {
+    startGame(event.target.value)
+  }
+
   useEffect(() => {
     if (!flash) return undefined
     document.body.classList.add(flash)
@@ -129,23 +158,39 @@ export default function MathBiggerGame() {
 
   if (!question) {
     return (
-      <GameShell title='Math Bigger' subtitle='pick the bigger set'>
+      <GameShell title='Math Bigger Smaller' subtitle={modeContent.subtitle}>
         <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
-        <section className='panel math-bigger-panel' aria-live='polite'>
-          <div className='math-bigger-prompt'>Loading sets...</div>
+        <section className='panel math-bigger-smaller-panel' aria-live='polite'>
+          <div className='math-bigger-smaller-prompt'>Loading sets...</div>
         </section>
       </GameShell>
     )
   }
 
   return (
-    <GameShell title='Math Bigger' subtitle='pick the bigger set'>
+    <GameShell title='Math Bigger Smaller' subtitle={modeContent.subtitle}>
       <RoundTracker marks={roundMarks} total={TOTAL_ROUNDS} />
 
-      <section className='panel math-bigger-panel'>
-        <div className='math-bigger-prompt'>Which set is bigger?</div>
+      <section className='panel math-bigger-smaller-panel'>
+        <div className='math-bigger-smaller-prompt'>
+          Which set is{" "}
+          <select
+            aria-label='choose bigger or smaller'
+            className='select-input math-bigger-smaller-focus-select'
+            id='math-bigger-smaller-focus'
+            onChange={changeFocusMode}
+            value={focusMode}
+          >
+            {Object.entries(FOCUS_MODES).map(([value, mode]) => (
+              <option key={value} value={value}>
+                {mode.prompt}
+              </option>
+            ))}
+          </select>{" "}
+          ?
+        </div>
         <div
-          className='math-bigger-choices'
+          className='math-bigger-smaller-choices'
           aria-live='polite'
           key={question.id}
         >
@@ -156,7 +201,7 @@ export default function MathBiggerGame() {
             number={question.left}
             onChoose={chooseAnswer}
           />
-          <div className='math-bigger-symbol'>?</div>
+          <div className='math-bigger-smaller-symbol'>?</div>
           <NumberChoice
             choice='right'
             isCorrect={selected === "right"}
@@ -170,7 +215,7 @@ export default function MathBiggerGame() {
       <CongratsOverlay
         correct={correct}
         incorrect={incorrect}
-        onPlayAgain={startGame}
+        onPlayAgain={() => startGame()}
         show={showWin}
       />
     </GameShell>
@@ -180,17 +225,20 @@ export default function MathBiggerGame() {
 function NumberChoice({ choice, isCorrect, isWrong, number, onChoose }) {
   return (
     <button
-      className={`math-bigger-choice ${isCorrect ? "correct" : ""} ${
+      className={`math-bigger-smaller-choice ${isCorrect ? "correct" : ""} ${
         isWrong ? "wrong" : ""
       }`}
       onClick={() => onChoose(choice)}
       type='button'
     >
-      <span className='math-bigger-number'>{number}</span>
-      <span className='math-bigger-pencils' aria-label={`${number} pencils`}>
+      <span className='math-bigger-smaller-number'>{number}</span>
+      <span
+        className='math-bigger-smaller-pencils'
+        aria-label={`${number} pencils`}
+      >
         {Array.from({ length: number }, (_, index) => (
           <span
-            className='math-bigger-pencil'
+            className='math-bigger-smaller-pencil'
             key={index}
             style={{ animationDelay: `${index * 0.02}s` }}
           >

@@ -1,0 +1,69 @@
+{
+  "vowels": [
+    {
+      "letter": "A",
+      "shortSound": {
+        "sound": "/ă/",
+        "example": "apple",
+        "words": ["cat", "bat", "map", "hat", "jam", "bag", "ran", "sad", "fan", "cap"]
+      },
+      "longSound": {
+        "sound": "/ā/",
+        "example": "cake",
+        "words": ["cake", "lake", "make", "game", "name", "tape", "rain", "play", "day", "stay"]
+      }
+    },
+    {
+      "letter": "E",
+      "shortSound": {
+        "sound": "/ĕ/",
+        "example": "egg",
+        "words": ["bed", "red", "pen", "hen", "net", "ten", "leg", "web", "pet", "men"]
+      },
+      "longSound": {
+        "sound": "/ē/",
+        "example": "me",
+        "words": ["me", "we", "he", "she", "tree", "bee", "see", "feet", "keep", "leaf"]
+      }
+    },
+    {
+      "letter": "I",
+      "shortSound": {
+        "sound": "/ĭ/",
+        "example": "igloo",
+        "words": ["sit", "hit", "pig", "dig", "lip", "pin", "win", "fish", "hill", "milk"]
+      },
+      "longSound": {
+        "sound": "/ī/",
+        "example": "ice",
+        "words": ["ice", "bike", "kite", "like", "time", "five", "line", "pine", "ride", "fly"]
+      }
+    },
+    {
+      "letter": "O",
+      "shortSound": {
+        "sound": "/ŏ/",
+        "example": "octopus",
+        "words": ["hot", "pot", "log", "mop", "box", "fox", "top", "hop", "sock", "rock"]
+      },
+      "longSound": {
+        "sound": "/ō/",
+        "example": "go",
+        "words": ["go", "no", "so", "home", "bone", "rope", "hope", "cone", "boat", "snow"]
+      }
+    },
+    {
+      "letter": "U",
+      "shortSound": {
+        "sound": "/ŭ/",
+        "example": "up",
+        "words": ["sun", "cup", "bug", "rug", "mud", "bus", "run", "fun", "nut", "gum"]
+      },
+      "longSound": {
+        "sound": "/ū/",
+        "example": "cube",
+        "words": ["cube", "tube", "cute", "mule", "use", "huge", "fume", "muse", "fuse", "mute"]
+      }
+    }
+  ]
+}
